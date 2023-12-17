@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('' . [
+        return view('admin', [
             'title' => 'Admin Login'
         ]);
     }
@@ -26,7 +26,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
             toastr()->success('Welcome Back!', ['closeButton' => true]);
 
-            return redirect()->intended('/admin');
+            return redirect()->intended('/');
         }
 
         toastr()->error('Username atau password salah!', 'Login gagal!', ['closeButton' => true]);
@@ -41,6 +41,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/admin');
+        return redirect('/');
     }
 }

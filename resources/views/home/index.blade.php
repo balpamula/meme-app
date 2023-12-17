@@ -1,32 +1,14 @@
-<!doctype html>
-<html lang="en" data-bs-theme="dark">
+@extends('layouts.main')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ env('APP_NAME') }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-
-<body>
-    <header class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container">
-            <a class="navbar-brand" href="/meme">{{ env('APP_NAME') }}</a>
-            <a class="btn btn-primary" aria-current="page" href="/admin">Admin</a>
-        </div>
-    </header>
-
+@section('main-content')
     <main>
         <section class="py-2 container">
             <div class="col-lg-6 col-md-8 mx-auto d-flex justify-content-center">
-                <button type="button" class="btn btn-success my-2" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Add Yours
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -65,8 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button class="btn btn-primary" type="submit">Save</button>
                                 </div>
                             </form>
@@ -86,14 +67,21 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $meme->title }}</h5>
                                     <p class="card-text">{{ $meme->description }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://storage.googleapis.com/meme-buckets/{{ $meme->img_url }}"
-                                                target="_blank" class="btn btn-sm btn-outline-secondary">View</a>
-                                            @can('auth')
-                                                <a class="btn btn-sm btn-outline-secondary">Delete</a>
-                                            @endcan
-                                        </div>
+                                    <div class="d-flex justify-content-start align-items-center grid gap-2">
+                                        <a href="https://storage.googleapis.com/meme-buckets/{{ $meme->img_url }}"
+                                            target="_blank" class="btn btn-sm btn-outline-secondary">View</a>
+                                        @auth
+                                            {{-- <a class="btn btn-sm btn-outline-secondary">Delete</a> --}}
+                                            <form action="/meme/{{ $meme->id }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-sm btn-outline-secondary"
+                                                    onclick="return confirm('Apakah anda yakin untuk menghapus data?')">Delete
+                                                </button>
+                                            </form>
+                                        @else
+                                            <a class="btn btn-sm btn-outline-secondary d-none">Delete</a>
+                                        @endauth
                                     </div>
                                 </div>
                             </div>
@@ -108,19 +96,4 @@
             </div>
         </div>
     </main>
-
-    <div class="container">
-        <footer class="my-4">
-            <p class="text-center text-body-secondary border-top pt-3">© 2023 Iqbal Pamula</p>
-        </footer>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+@endsection

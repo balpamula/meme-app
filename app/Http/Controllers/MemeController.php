@@ -6,6 +6,7 @@ use App\Models\Meme;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class MemeController extends Controller
 {
@@ -15,7 +16,7 @@ class MemeController extends Controller
     public function index()
     {
         return view('home.index', [
-            'memes' => Meme::paginate(6)
+            'memes' => Meme::latest()->paginate(6)
         ]);
     }
 
@@ -85,6 +86,11 @@ class MemeController extends Controller
      */
     public function destroy(Meme $meme)
     {
-        //
+        Storage::disk('gcs')->delete($meme->img_url);
+
+        Meme::destroy($meme->id);
+
+        toastr()->success('Meme deleted successfully!', ['closeButton' => true]);
+        return redirect('/');
     }
 }
