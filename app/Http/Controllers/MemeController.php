@@ -45,7 +45,7 @@ class MemeController extends Controller
 
         $validatedData = $request->validate([
             'title' => 'required|max:255',
-            'image' => 'required|image',
+            'image' => 'required|image|max:4096',
             'description' => 'nullable'
         ]);
 

@@ -5,7 +5,7 @@
         <section class="py-2 container">
             <div class="col-lg-6 col-md-8 mx-auto d-flex justify-content-center">
                 <button type="button" class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Add Yours
+                    Add Yours Meme
                 </button>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -39,6 +39,7 @@
                                             <span class="text-danger">*</span></label>
                                         <input type="file" class="form-control @error('image') is-invalid @enderror"
                                             id="image" name="image" accept="image/*">
+                                        <small>Max image size is 4MB</small>
                                         @error('image')
                                             <div class="invalid-feedback mb-1">
                                                 {{ $message }}

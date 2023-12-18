@@ -31,7 +31,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary w-100">Masuk</button>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
                         </div>
                     </div>
                 </form>
